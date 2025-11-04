@@ -12,6 +12,7 @@ import {
 import { AppSidebar } from "@/components/app-sidebar";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
+import "stream-chat-react/dist/css/v2/index.css";
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -34,12 +35,12 @@ function Layout({ children }: { children: React.ReactNode }) {
               />
               <Link href="/dashboard">
                 <h1 className="text-lg font-bold tracking-wider uppercase">
-                    Beam
+                  Beam
                 </h1>
               </Link>
             </header>
             <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-                {children}
+              {children}
             </div>
           </SidebarInset>
         </SidebarProvider>

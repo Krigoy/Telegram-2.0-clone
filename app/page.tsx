@@ -2,20 +2,13 @@ import FeatureCard from "@/components/FeatureCard";
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
-import {
-  MessageCircle,
-  Video,
-  Shield,
-  Zap,
-  Users,
-  LucideIcon
-} from "lucide-react";
+import { MessageCircle, Video, Shield, Zap, Users } from "lucide-react";
 
 export default function Home() {
   return (
     <div className="">
       <Header />
- 
+
       <main className="flex-1 flex flex-col items-center px-4 py-16 sm:px-6 text-center gap-20">
         <div className="max-w-4xl space-y-8 relative">
           {/* Background Gradient */}
@@ -29,7 +22,8 @@ export default function Home() {
               </span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              The modern messaging platform that combines lightning-fast chat and crystal-clear video calls in one seamless experience.
+              The modern messaging platform that combines lightning-fast chat
+              and crystal-clear video calls in one seamless experience.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-6">
@@ -81,32 +75,33 @@ export default function Home() {
                 Everything you need to stay connected
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Powerful features designed fro seamless communication, whether you&apos;re chatting with friends or colloborating with teams.
+                Powerful features designed fro seamless communication, whether
+                you&apos;re chatting with friends or colloborating with teams.
               </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
-              <FeatureCard 
+              <FeatureCard
                 icon={MessageCircle}
                 title="Instant Messaging"
                 description="Lightning-fast messages with real-time delivery. Chat with friends and colleagues seamlessly."
               />
-              <FeatureCard 
+              <FeatureCard
                 icon={Video}
                 title="HD Video Calls"
                 description="Crystal-clear video calls with one click. Perfect quality for personal chats and team meetings."
               />
-              <FeatureCard 
+              <FeatureCard
                 icon={Shield}
                 title="Privacy First"
                 description="End-to-End encryption keeps your conversations private. Your data belongs to you, always."
               />
-              <FeatureCard 
+              <FeatureCard
                 icon={Users}
                 title="Group Chats"
                 description="Create groups wit friends, family, or colleagues. Manage conversations with advanced controls."
               />
-              <FeatureCard 
+              <FeatureCard
                 icon={Zap}
                 title="Lightning Fast"
                 description="Optimised for speed and performance. Works seamlessly across all your devices with instant sync."
@@ -120,7 +115,9 @@ export default function Home() {
                 Ready to transform your conversations?
               </h2>
               <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Join thousands of users who&apos;ve already discovered a better way to communicate. Start your journey with Beam today - it&apos;s completely free.
+                Join thousands of users who&apos;ve already discovered a better
+                way to communicate. Start your journey with Beam today -
+                it&apos;s completely free.
               </p>
 
               <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
@@ -132,7 +129,7 @@ export default function Home() {
                   </SignUpButton>
                 </SignedOut>
               </div>
- 
+
               <div className="flex justify-center flex-col sm:flex-row items-center gap-6 mt-8 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-green-500"></div>
@@ -163,19 +160,19 @@ export default function Home() {
             </div>
 
             <div className="flex items-center gap-8">
-              <a 
+              <a
                 href="#"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 Privacy Policy
               </a>
-              <a 
+              <a
                 href="#"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 Terms of Service
               </a>
-              <a 
+              <a
                 href="#"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
@@ -186,7 +183,10 @@ export default function Home() {
 
           <div className="border-t mt-8 pt-8 text-center">
             <p className="text-xs text-muted-foreground">
-              2025 Beam. This is a Demo. We have no affiliation with any of the brands mentioned in the video including Beam, any usage is purely educational, in the event of any infringement, please contact us and we will remove/alter the content immediately.
+              2025 Beam. This is a Demo. We have no affiliation with any of the
+              brands mentioned in the video including Beam, any usage is purely
+              educational, in the event of any infringement, please contact us
+              and we will remove/alter the content immediately.
             </p>
           </div>
         </div>
