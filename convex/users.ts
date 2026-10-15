@@ -5,6 +5,9 @@ import { v } from "convex/values";
 export const getUserByClerkId = query({
     args: { userId: v.string()},
     handler: async (ctx, { userId }) => {
+        const identity = await ctx.auth.getUserIdentity();
+        if (!identity) return null;
+
         if(!userId) return null;
 
         return await ctx.db    
@@ -23,6 +26,12 @@ export const upsertUser = mutation({
         imageUrl: v.string(),
     },
     handler: async (ctx, {userId, name, email, imageUrl }) => {
+        // Only a signed-in user may create or update their own record.
+        const identity = await ctx.auth.getUserIdentity();
+        if (!identity || identity.subject !== userId) {
+            throw new Error("Not authorized to update this user");
+        }
+
         const existingUser = await ctx.db
             .query("users")
             .withIndex("by_userId", (q) => q.eq("userId", userId))
@@ -40,13 +49,17 @@ export const upsertUser = mutation({
 //Search users by name or email
 export const searchUsers = query({
     args: { searchTerm: v.string() },
-    handler: async (convexToJson, { searchTerm }) => {
+    handler: async (ctx, { searchTerm }) => {
+        // The user directory (names and emails) is only visible to signed-in users.
+        const identity = await ctx.auth.getUserIdentity();
+        if (!identity) return [];
+
         if(!searchTerm.trim()) return [];
 
         const normalizedSearch = searchTerm.toLowerCase().trim();
 
         //Get all users and filter them by name or email containing search term
-        const allUsers = await convexToJson.db.query("users").collect();
+        const allUsers = await ctx.db.query("users").collect();
 
         return allUsers
             .filter(

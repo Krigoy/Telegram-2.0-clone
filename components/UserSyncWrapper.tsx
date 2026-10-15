@@ -2,7 +2,7 @@
 
 import { api } from "@/convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
-import { useMutation } from "convex/react";
+import { useConvexAuth, useMutation } from "convex/react";
 import { useCallback, useEffect, useState } from "react";
 import { LoadingSpinner } from "./LoadingSpinner";
 import streamClient from "@/lib/stream";
@@ -10,6 +10,8 @@ import { createToken } from "@/actions/createToken";
 
 function UserSyncWrapper({ children }: { children: React.ReactNode }) {
   const { user, isLoaded: isUserLoaded } = useUser();
+  // Wait until Convex has the Clerk token, so the upsert mutation is authenticated.
+  const { isAuthenticated: isConvexAuthed } = useConvexAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -28,7 +30,7 @@ function UserSyncWrapper({ children }: { children: React.ReactNode }) {
           throw new Error("User is not authenticated");
         }
 
-        const token = await createToken(user.id);
+        const token = await createToken();
         return token;
       };
 
@@ -77,6 +79,7 @@ function UserSyncWrapper({ children }: { children: React.ReactNode }) {
     if (!isUserLoaded) return;
 
     if (user) {
+      if (!isConvexAuthed) return;
       syncUser();
     } else {
       disconnectUser();
@@ -89,7 +92,7 @@ function UserSyncWrapper({ children }: { children: React.ReactNode }) {
         disconnectUser();
       }
     };
-  }, [user, isUserLoaded, syncUser, disconnectUser]);
+  }, [user, isUserLoaded, isConvexAuthed, syncUser, disconnectUser]);
 
   //Loading state
   if (!isUserLoaded || isLoading) {
