@@ -36,29 +36,6 @@ export default function Home() {
             </SignedOut>
           </div>
 
-          {/* Social Proof */}
-          <div className="pt-8">
-            <p className="text-sm text-muted-foreground mb-4">
-              Truested by thousands of users worldwide
-            </p>
-            <div className="flex justify-center items-center gap-8 text-muted-foreground">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-foreground">50K+</div>
-                <div className="text-sm">Active Users</div>
-              </div>
-              <div className="w-px h-8 bg-border"></div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-foreground">1M+</div>
-                <div className="text-sm">Messages Sent</div>
-              </div>
-              <div className="w-px h-8 bg-border"></div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-foreground">99.9%</div>
-                <div className="text-sm">Uptime</div>
-              </div>
-            </div>
-          </div>
-
           {/* Enhanced features selection */}
           <div className="w-full max-w-6xl">
             {/* Section Divider */}
@@ -75,8 +52,7 @@ export default function Home() {
                 Everything you need to stay connected
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Powerful features designed fro seamless communication, whether
-                you&apos;re chatting with friends or colloborating with teams.
+                One-to-one chats, group chats and video calls in a single app.
               </p>
             </div>
 
@@ -84,27 +60,27 @@ export default function Home() {
               <FeatureCard
                 icon={MessageCircle}
                 title="Instant Messaging"
-                description="Lightning-fast messages with real-time delivery. Chat with friends and colleagues seamlessly."
+                description="Real-time one-to-one messaging with threads, powered by Stream Chat."
               />
               <FeatureCard
                 icon={Video}
                 title="HD Video Calls"
-                description="Crystal-clear video calls with one click. Perfect quality for personal chats and team meetings."
+                description="Start a video call from any chat, with screen sharing and a shareable invite link."
               />
               <FeatureCard
                 icon={Shield}
-                title="Privacy First"
-                description="End-to-End encryption keeps your conversations private. Your data belongs to you, always."
+                title="Secure Sign-In"
+                description="Sign-in is handled by Clerk, and chat and call access tokens are issued server-side for the signed-in user only."
               />
               <FeatureCard
                 icon={Users}
                 title="Group Chats"
-                description="Create groups wit friends, family, or colleagues. Manage conversations with advanced controls."
+                description="Create groups with friends, family, or colleagues. Name the group and leave it at any time."
               />
               <FeatureCard
                 icon={Zap}
                 title="Lightning Fast"
-                description="Optimised for speed and performance. Works seamlessly across all your devices with instant sync."
+                description="Messages and channel updates sync in real time through Stream."
               />
             </div>
           </div>
@@ -115,9 +91,7 @@ export default function Home() {
                 Ready to transform your conversations?
               </h2>
               <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Join thousands of users who&apos;ve already discovered a better
-                way to communicate. Start your journey with Beam today -
-                it&apos;s completely free.
+                Create an account and start a conversation in a few clicks.
               </p>
 
               <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
@@ -130,27 +104,13 @@ export default function Home() {
                 </SignedOut>
               </div>
 
-              <div className="flex justify-center flex-col sm:flex-row items-center gap-6 mt-8 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                  No credit card required
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                  Free forever plan
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                  Setup in 30 seconds
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </main>
 
       <footer className="border-t bg-muted/30">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py12">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
             <div>
               <span className="text-xl font-bold tracking-tight">Beam</span>

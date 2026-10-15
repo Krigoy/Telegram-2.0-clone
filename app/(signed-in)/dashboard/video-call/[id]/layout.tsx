@@ -45,7 +45,7 @@ function Layout({ children }: { children: React.ReactNode }) {
     if (!user?.id) {
       throw new Error("User not authenticated");
     }
-    return await createToken(user.id);
+    return await createToken();
   }, [user?.id]);
 
   useEffect(() => {
