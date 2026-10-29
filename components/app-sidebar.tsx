@@ -1,6 +1,5 @@
 "use client";
 import * as React from "react";
-import { GalleryVerticalEnd } from "lucide-react";
 
 import {
   Sidebar,
@@ -22,6 +21,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   const filters: ChannelFilters = {
     members: { $in: [user?.id as string] },
+    // "team" kept so group chats created before groups moved to "messaging" still show
     type: { $in: ["messaging", "team"] },
   };
   const options = { presence: true, state: true };
@@ -43,7 +43,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     {user?.firstName} {user?.lastName}
                   </span>
                 </div>
-                <UserButton signInUrl="/sign-in" />
+                <UserButton />
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>

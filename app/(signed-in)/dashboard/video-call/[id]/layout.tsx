@@ -88,8 +88,12 @@ function Layout({ children }: { children: React.ReactNode }) {
     joinCall();
 
     return () => {
-      if (streamCall && streamCall.state.callingState === CallingState.JOINED) {
-        streamCall.leave().catch(console.error);
+      // Leave on any state except LEFT (e.g. still JOINING or RECONNECTING),
+      // otherwise a half-joined call keeps the camera and mic alive.
+      if (streamCall.state.callingState !== CallingState.LEFT) {
+        streamCall.leave().catch((err) => {
+          console.error("Error leaving call:", err);
+        });
       }
     };
   }, [id, client]);

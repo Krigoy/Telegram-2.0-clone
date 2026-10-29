@@ -111,6 +111,33 @@ This starts Next.js and `convex dev` together. Open http://localhost:3000, sign 
 
 > The `dev` script uses `&` to run both processes, which works in macOS/Linux shells. On Windows, run `npx convex dev` and `npx next dev --turbopack` in two terminals.
 
+## Deploying to Vercel
+
+1. **Import the repo** into Vercel. The framework preset is detected as Next.js.
+2. **Environment variables** — in the Vercel project settings, add:
+
+   | Variable | Value |
+   |---|---|
+   | `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk publishable key (use the production instance's key for a live site) |
+   | `CLERK_SECRET_KEY` | Clerk secret key |
+   | `NEXT_PUBLIC_STREAM_API_KEY` | Stream API key |
+   | `STREAM_API_SECRET_KEY` | Stream API secret |
+   | `CONVEX_DEPLOY_KEY` | Convex dashboard → your project → **Production** deployment → Settings → **Generate Production Deploy Key** |
+
+   `NEXT_PUBLIC_CONVEX_URL` does not need to be set by hand — the build command below sets it.
+3. **Build command** — override it with:
+
+   ```bash
+   npx convex deploy --cmd 'pnpm build'
+   ```
+
+   This pushes the Convex functions and schema to the production deployment, then runs the Next.js build with `NEXT_PUBLIC_CONVEX_URL` pointing at it.
+4. **Clerk JWT template** — the instance used in production needs a JWT template named `convex` (Convex preset), the same as in development.
+5. **Convex environment variables** — set `CLERK_JWT_ISSUER_DOMAIN` to the Clerk issuer URL in **both** the dev and the prod Convex deployments (Convex dashboard → Settings → Environment Variables). If the production Clerk instance has a different issuer, use that one for prod.
+6. **Clerk domain** — add your Vercel domain (e.g. `your-app.vercel.app` or a custom domain) to the Clerk application under **Domains**, so sign-in works on the deployed site.
+
+If the app gets stuck or shows "Could not authenticate with Convex" after signing in, steps 4 and 5 are the usual cause.
+
 ## Security notes
 
 - Stream tokens are minted only for the user in the current Clerk session; the API secret stays on the server.
@@ -119,11 +146,11 @@ This starts Next.js and `convex dev` together. Open http://localhost:3000, sign 
 
 ## Limitations and next steps
 
-- Not deployed yet — no public demo link.
+- No public demo link yet.
 - User search loads all users and filters in memory; a Convex search index would be needed at scale.
 - No automated tests.
 - No message encryption beyond what Stream provides in transit.
-- Ideas: message search, notifications for new messages, and deployment to Vercel with a production Convex deployment.
+- Ideas: message search, notifications for new messages.
 
 ## Acknowledgements
 

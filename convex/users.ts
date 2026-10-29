@@ -38,7 +38,7 @@ export const upsertUser = mutation({
             .first();
 
         if(existingUser) {
-            await ctx.db.patch(existingUser._id, { name, imageUrl });
+            await ctx.db.patch(existingUser._id, { name, email, imageUrl });
             return existingUser._id;
         }
 

@@ -6,10 +6,7 @@ import { StatusCard } from "@/components/ui/StatusCard";
 import {
   CallControls,
   CallingState,
-  ReactionsButton,
-  ScreenShareButton,
   SpeakerLayout,
-  useCall,
   useCallStateHooks,
 } from "@stream-io/video-react-sdk";
 import { Check, Copy } from "lucide-react";
@@ -20,20 +17,15 @@ function VideoCall() {
   const { useCallCallingState, useParticipants } = useCallStateHooks();
   const callingState = useCallCallingState();
   const participants = useParticipants();
-  const call = useCall();
   const router = useRouter();
   const [copied, setCopied] = useState(false);
   const { setOpen } = useSidebar();
 
-  const handleLeave = async () => {
-    try {
-      await call?.leave();
-    } catch (err) {
-      console.error("Error leaving call:", err);
-    } finally {
-      router.push("/dashboard");
-      setOpen(true);
-    }
+  // CallControls' leave button already calls call.leave() before onLeave,
+  // so here we only need to navigate away and restore the sidebar.
+  const handleLeave = () => {
+    router.push("/dashboard");
+    setOpen(true);
   };
 
   const copyToClipboard = async () => {
@@ -83,6 +75,8 @@ function VideoCall() {
 
         {/* Bottom control bar */}
         <div className="absolute bottom-0 left-0 w-full flex justify-center items-center py-4 bg-black/40 backdrop-blur-md z-50">
+          {/* CallControls includes mic, camera, reactions, screen share,
+              recording and leave buttons (gated by call permissions) */}
           <CallControls onLeave={handleLeave} />
         </div>
 
