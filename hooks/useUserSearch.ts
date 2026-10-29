@@ -17,6 +17,6 @@ export function useUserSearch() {
         searchTerm,
         setSearchTerm,
         searchResults: (searchResults || []) as Doc<"users">[],
-        isLoading: searchResults === undefined && debouncedSearchTerm.trim() !== " ",
+        isLoading: searchResults === undefined && debouncedSearchTerm.trim() !== "",
     };
 }

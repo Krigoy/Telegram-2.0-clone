@@ -7,7 +7,6 @@ import { useState } from "react";
 import { useChatContext } from "stream-chat-react";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -25,6 +24,7 @@ export function NewChatDialog({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState<Doc<"users">[]>([]);
   const [groupName, setGroupName] = useState("");
+  const [isCreating, setIsCreating] = useState(false);
   const createNewChat = useCreateNewChat();
   const { user } = useUser();
   const { setActiveChannel } = useChatContext();
@@ -50,19 +50,29 @@ export function NewChatDialog({ children }: { children: React.ReactNode }) {
   };
 
   const handleCreateChat = async () => {
+    if (!user?.id || isCreating) return;
+
     const totalMembers = selectedUsers.length + 1;
     const isGroupChat = totalMembers > 2;
 
-    const channel = await createNewChat({
-      members: [
-        user?.id as string,
-        ...selectedUsers.map((user) => user.userId),
-      ],
-      createdBy: user?.id as string,
-      groupName: isGroupChat ? groupName.trim() || undefined : undefined,
-    });
+    try {
+      setIsCreating(true);
 
-    setActiveChannel(channel);
+      const channel = await createNewChat({
+        members: [user.id, ...selectedUsers.map((user) => user.userId)],
+        createdBy: user.id,
+        groupName: isGroupChat ? groupName.trim() || undefined : undefined,
+      });
+
+      setActiveChannel(channel);
+
+      //Close the dialog and reset the form
+      handleOpenChange(false);
+    } catch (error) {
+      console.error("Error creating chat:", error);
+    } finally {
+      setIsCreating(false);
+    }
   };
 
   return (
@@ -93,7 +103,7 @@ export function NewChatDialog({ children }: { children: React.ReactNode }) {
                     key={user._id}
                     className="flex items-center justify-between p-2 bg-muted/50 border border-border rounded-lg"
                   >
-                    <div className="dlex items-center space-x-2">
+                    <div className="flex items-center space-x-2">
                       <Image
                         src={user.imageUrl}
                         alt={user.name}
@@ -148,18 +158,20 @@ export function NewChatDialog({ children }: { children: React.ReactNode }) {
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={() => setOpen(false)}>
+          <Button variant="outline" onClick={() => handleOpenChange(false)}>
             Cancel
           </Button>
           <Button
-            disabled={selectedUsers.length === 0}
+            disabled={selectedUsers.length === 0 || isCreating}
             onClick={handleCreateChat}
           >
-            {selectedUsers.length > 1
-              ? `Create Group Chat (${selectedUsers.length + 1} members)`
-              : selectedUsers.length === 1
-                ? "Start Chat"
-                : "Create Chat"}
+            {isCreating
+              ? "Creating..."
+              : selectedUsers.length > 1
+                ? `Create Group Chat (${selectedUsers.length + 1} members)`
+                : selectedUsers.length === 1
+                  ? "Start Chat"
+                  : "Create Chat"}
           </Button>
         </DialogFooter>
       </DialogContent>

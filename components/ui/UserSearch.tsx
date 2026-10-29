@@ -1,7 +1,6 @@
 "use client";
 
 import { Doc } from "@/convex/_generated/dataModel";
-import { searchUsers } from "@/convex/users";
 import { useUserSearch } from "@/hooks/useUserSearch";
 import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
@@ -83,6 +82,7 @@ function UserSearch({
                   onClick={() => handleSelectUser(user)}
                   className={cn(
                     "w-full px-4 py-3 text-left hover:bg-accent transition-colors",
+                    "flex items-center gap-3 group",
                     "border-b border-border last:border-b-0",
                     "focus:outline-none focus:bg-accent"
                   )}
@@ -94,7 +94,7 @@ function UserSearch({
                       alt={user.name}
                       width={40}
                       height={40}
-                      className="h-10 w-10 rounded-full object-conver ring-2 ring-border"
+                      className="h-10 w-10 rounded-full object-cover ring-2 ring-border"
                     />
                   </div>
 
